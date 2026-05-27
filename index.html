@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ishita P Acharya - Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0a0a0f;
+      --panel:#0f1116;
+      --muted:#d6dde6;
+      --muted-dim:#9aa6b3;
+      --accent:#0aa7ff; /* electric blue accent */
+      --accent-glow:rgba(10,167,255,0.12);
+      --card-bg:rgba(255,255,255,0.02);
+      --glass: rgba(255,255,255,0.03);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;background:var(--bg);
+      color:var(--muted);font-family:'Syne',system-ui,Segoe UI,Helvetica,Apple Color Emoji,sans-serif;
+      -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-y:auto;scroll-behavior:smooth;
+      cursor: none; /* custom cursor rendered */
+    }
+    /* Custom cursor */
+    .cursor{position:fixed;pointer-events:none;z-index:9999;width:16px;height:16px;border-radius:50%;transform:translate(-50%,-50%);mix-blend-mode:screen;border:2px solid var(--accent);box-shadow:0 0 18px var(--accent-glow)}
+
+    header{position:sticky;top:0;z-index:60;background:linear-gradient(180deg, rgba(10,10,15,0.6), rgba(10,10,15,0.45));border-bottom:1px solid rgba(255,255,255,0.03);backdrop-filter: blur(6px)}
+    .nav{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:46px;height:46px;background:linear-gradient(180deg, rgba(10,167,255,0.14), rgba(10,167,255,0.08));display:grid;place-items:center;border-radius:8px;font-weight:800;color:var(--muted);font-family:'DM Mono',monospace}
+    .brand .name{font-weight:700;letter-spacing:0.4px}
+    nav a{color:var(--muted);text-decoration:none;margin-left:22px;font-weight:600}
+    nav a:hover{color:var(--accent)}
+
+    main{max-width:1100px;margin:0 auto;padding:36px 20px}
+
+    /* Hero */
+    .hero{min-height:88vh;display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:center;padding-top:22px;position:relative;overflow:visible}
+    .hero-left{align-self:center}
+    h1{font-size:clamp(40px,7vw,72px);margin:0;line-height:0.92;letter-spacing:-0.6px;font-family:'Syne',sans-serif}
+    .display{font-weight:800;color:var(--muted)}
+    .value{margin-top:12px;font-size:18px;color:var(--muted-dim);max-width:720px}
+    .value strong{color:var(--muted)}
+    .hero-actions{margin-top:22px;display:flex;gap:12px}
+    .btn{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);padding:10px 14px;border-radius:8px;font-weight:700;cursor:pointer}
+    .btn.primary{background:linear-gradient(90deg, rgba(10,167,255,0.08), rgba(10,167,255,0.04));border-color:var(--accent);color:var(--accent)}
+    .btn.ghost{border-color:rgba(255,255,255,0.04);color:var(--muted-dim)}
+    .btn:hover{box-shadow:0 8px 30px var(--accent-glow);transform:translateY(-3px)}
+
+    .hero-right{display:flex;flex-direction:column;gap:18px;align-items:flex-end}
+    .card{width:100%;max-width:420px;padding:18px;background:var(--panel);border-radius:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 6px 30px rgba(2,8,15,0.6)}
+    .meta{font-family:'DM Mono',monospace;color:var(--muted-dim);font-size:13px}
+
+    section{margin-top:48px;opacity:0;transform:translateY(18px);transition:all .7s cubic-bezier(.2,.9,.25,1)}
+    section.visible{opacity:1;transform:none}
+
+    /* About */
+    .about{display:grid;grid-template-columns:1fr;gap:28px}
+
+    /* Skills */
+    .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .skill-group{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);min-width:200px}
+    .skill-group h4{margin:0 0 8px 0;color:var(--muted)}
+    .tags{display:flex;flex-wrap:wrap;gap:8px}
+    .tag{background:transparent;border:1px solid rgba(255,255,255,0.03);padding:6px 8px;border-radius:6px;color:var(--muted-dim);font-weight:700;font-family:'DM Mono',monospace}
+    /* ensure long emails wrap inside contact boxes */
+    .about .card .tag, .contact .tag{display:inline-block;max-width:100%;overflow-wrap:anywhere;word-break:break-word}
+
+    /* Projects */
+    .projects{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .proj{padding:20px;border-radius:12px;background:var(--card-bg);border:1px solid rgba(255,255,255,0.03);transition:transform .25s ease,box-shadow .25s ease}
+    .proj:hover{transform:translateY(-8px);box-shadow:0 18px 54px var(--accent-glow);border-color:rgba(10,167,255,0.12)}
+    .proj h3{margin:0 0 6px 0}
+    .proj .meta{font-size:12px;color:var(--muted)}
+    .proj ul{margin:10px 0 0 18px}
+
+    .badge{display:inline-block;padding:6px 8px;border-radius:999px;font-family:'DM Mono',monospace;font-weight:700;font-size:12px}
+    .badge.shipped{background:linear-gradient(90deg, rgba(10,167,255,0.08), rgba(10,167,255,0.04));color:var(--accent);border:1px solid rgba(10,167,255,0.12)}
+    .badge.research{background:transparent;color:var(--muted-dim);border:1px solid rgba(255,255,255,0.03)}
+    .badge.personal{background:transparent;color:var(--muted-dim);border:1px solid rgba(255,255,255,0.03)}
+
+    /* Certifications */
+    .certs{display:flex;flex-direction:column;gap:8px}
+    .cert{padding:12px;border-radius:10px;background:linear-gradient(90deg, rgba(0,0,0,0.15), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.02)}
+
+    /* Contact */
+    .contact{display:flex;flex-direction:column;gap:8px}
+
+    footer{margin:36px auto 80px;max-width:1100px;padding:20px;color:var(--muted);text-align:center}
+
+    /* Social icons */
+    .icons{display:flex;gap:10px}
+    .icon{width:40px;height:40px;border-radius:8px;display:grid;place-items:center;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02)}
+    .icon svg{width:18px;height:18px;fill:var(--accent)}
+
+    /* Responsive */
+    @media (max-width:1000px){
+      .hero{grid-template-columns:1fr;gap:20px}
+      .projects{grid-template-columns:1fr}
+      .about{grid-template-columns:1fr}
+    }
+    @media (max-width:700px){
+      .skills-grid{grid-template-columns:1fr}
+      nav a{display:none}
+      .logo{width:38px;height:38px}
+      h1{font-size:32px}
+    }
+
+  </style>
+</head>
+  <body>
+  <canvas id="bgCanvas" style="position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.12"></canvas>
+  <div class="cursor" id="cursorEl"></div>
+  <header>
+    <div class="nav">
+      <div class="brand">
+        <div class="logo">IP</div>
+        <div>
+          <div class="name">Ishita P Acharya</div>
+          <div class="meta" style="font-size:12px">Final-year CS — MITE, Karnataka</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero-left">
+        <h1 class="display">Ishita P Acharya</h1>
+        <p class="value">I build AI systems that work in production and full-stack products that clients actually use.</p>
+        <div class="hero-actions" style="margin-top:18px">
+          <button class="btn primary" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">View My Work</button>
+          <a class="btn ghost" href="assets/Resume-%20ISHITA%20SD.pdf" download>Download Resume</a>
+        </div>
+      </div>
+
+      <aside class="hero-right">
+        <div class="card">
+          <div class="meta">Based in Karnataka, India</div>
+          <p style="margin-top:10px">Final-year BE Computer Science student (GPA 7.92/10). Passionate about bridging AI and product-grade ML.</p>
+        </div>
+
+        <div class="card">
+          <div class="meta">Quick Details</div>
+          <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap">
+            <div class="tag">Graduation: Sept 2026</div>
+            <div class="tag">Specialties: ML, Full-stack, AI Systems</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="about">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h2 style="margin:0">About</h2>
+        <div class="meta">Final-year BE Computer Science, MITE</div>
+      </div>
+      <div class="about" style="margin-top:18px">
+        <div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <div class="card" style="padding:12px;min-width:180px"><div style="font-size:14px">🎓</div><div style="font-weight:700;margin-top:6px">Final Year BE, Computer Science</div><div class="meta" style="margin-top:6px">MITE, Karnataka</div></div>
+            <div class="card" style="padding:12px;min-width:160px"><div style="font-size:14px">⚡</div><div style="font-weight:700;margin-top:6px">GPA: 7.92 / 10</div></div>
+            <div class="card" style="padding:12px;min-width:200px"><div style="font-size:14px">🚀</div><div style="font-weight:700;margin-top:6px"> 4 Projects</div><div class="meta" style="margin-top:6px">1 live with real users</div></div>
+          </div>
+
+          <p style="margin-top:14px">Final-year Computer Science engineer with hands-on experience building AI systems and full-stack products from scratch. I've developed a clinical ML pipeline for medical diagnosis, a real-time voice AI system, and a production SaaS platform currently used by a real client all independently or in small teams. I'm comfortable across the stack: Python and ML on one end, React/Node.js and cloud deployment on the other. I'm looking for a role where I can ship things that matter.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <div style="margin-top:16px" class="skills-grid">
+        <div class="skill-group">
+          <h4>Languages & Frontend</h4>
+          <div class="tags"><span class="tag">C</span><span class="tag">Python</span><span class="tag">JS/TS</span><span class="tag">React</span><span class="tag">Node.js</span></div>
+        </div>
+        <div class="skill-group">
+          <h4>AI / ML</h4>
+          <div class="tags"><span class="tag">Random Forest</span><span class="tag">PyTorch</span><span class="tag">SMOTE</span><span class="tag">RAG</span><span class="tag">LangChain</span><span class="tag">HuggingFace</span></div>
+        </div>
+        <div class="skill-group">
+          <h4>Frameworks & Tools</h4>
+          <div class="tags"><span class="tag">Flask</span><span class="tag">FastAPI</span><span class="tag">Scikit-learn</span><span class="tag">OpenCV</span></div>
+        </div>
+        <div class="skill-group">
+          <h4>Databases</h4>
+          <div class="tags"><span class="tag">MySQL</span><span class="tag">MongoDB Atlas</span></div>
+        </div>
+        <div class="skill-group">
+          <h4>DevOps & Cloud</h4>
+          <div class="tags"><span class="tag">AWS EC2</span><span class="tag">S3</span><span class="tag">Git</span><span class="tag">Docker</span><span class="tag">Vercel</span><span class="tag">Railway</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <div style="margin-top:16px" class="projects">
+        <article class="proj">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+            <h3>ClientPulse — Client & Delivery Intelligence Platform</h3>
+            <span class="badge shipped">🟢 PRESENT</span>
+          </div>
+          <div class="meta">Apr 2026 – Present</div>
+          <p style="margin-top:8px;font-weight:700">Impact: Built a full SaaS platform for an IT consulting firm — used in production.</p>
+          <div style="margin-top:8px;font-family:'DM Mono',monospace;color:var(--muted-dim)">Tags: React, Node.js, MongoDB, JWT, REST API, CI/CD, Agile</div>
+          <ul>
+            <li>Full-stack: React frontend + Node.js backend, MongoDB Atlas, JWT auth for 4 user roles.</li>
+            <li>Automated invoice generation, SLA risk engine and flexible billing modes (T&M, Fixed, Retainer).</li>
+            <li>Sub-500ms API responses, 70%+ Jest test coverage, CI/CD via GitHub Actions → Vercel & Railway.</li>
+          </ul>
+        </article>
+
+        <article class="proj">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+            <h3>Peripheral Arterial Disease Detection</h3>
+            <span class="badge research">🔬 RESEARCH</span>
+          </div>
+          <div class="meta">Mar – Nov 2025</div>
+          <p style="margin-top:8px;font-weight:700">Impact: ML pipeline that reads clinical Doppler reports and flags PAD — replacing manual review.</p>
+          <div style="margin-top:8px;font-family:'DM Mono',monospace;color:var(--muted-dim)">Tags: Python, Scikit-learn, SMOTE, Flask, OCR, Medical AI</div>
+          <ul>
+            <li>OCR (Tesseract) to extract structured features from unstructured clinical PDFs.</li>
+            <li>Random Forest + SMOTE to handle imbalance; improved minority-class recall (~75% accuracy overall).</li>
+            <li>Hybrid decision engine combining ML output with clinical rule logic (ABI ≤ 0.90) to reduce false negatives.</li>
+          </ul>
+        </article>
+
+        <article class="proj">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+            <h3>Voice-Controlled Music Player</h3>
+            <span class="badge personal">🎙️ PERSONAL</span>
+          </div>
+          <div class="meta">Nov 2025 – Jan 2026</div>
+          <p style="margin-top:8px;font-weight:700">Impact: End-to-end voice AI system with real-time Spotify control — zero touch required.</p>
+          <div style="margin-top:8px;font-family:'DM Mono',monospace;color:var(--muted-dim)">Tags: Python, Flask, ElevenLabs API, Spotify API, Speech-to-Text</div>
+          <ul>
+            <li>SpeechRecognition + ElevenLabs for command recognition and natural voice feedback.</li>
+            <li>Spotify API integration for play/pause/skip/volume — voice-driven control with low latency.</li>
+            <li>Modular Python/Flask backend designed for extensibility and low-latency pipelines.</li>
+          </ul>
+        </article>
+
+        <article class="proj">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+            <h3>Zoe — AI Voice Assistant</h3>
+            <span class="badge personal">🎙️ PERSONAL</span>
+          </div>
+          <div class="meta">2025 – 2026</div>
+          <p style="margin-top:8px;font-weight:700">Impact: Developed an AI-powered personal voice assistant for real-time, natural voice interaction and command execution.</p>
+          <div style="margin-top:8px;font-family:'DM Mono',monospace;color:var(--muted-dim)">Tags: Python, ElevenLabs API, OpenAI API, SpeechRecognition, pyttsx3, Flask</div>
+          <ul>
+            <li>Integrated SpeechRecognition for STT and ElevenLabs plus pyttsx3 for high-quality TTS and fallback local voices.</li>
+            <li>Implemented conversational logic using the OpenAI API to handle context, follow-ups and task execution.</li>
+            <li>Packaged as a Flask web app to run commands, execute integrations, and provide a responsive real-time assistant.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="certs">
+      <h2>Certifications</h2>
+      <div class="certs" style="margin-top:12px">
+        <div class="cert">Cyber Job Simulation — Deloitte</div>
+        <div class="cert">Cybersecurity in Product Dev Lifecycle — MITE</div>
+        <div class="cert">Vulnerability Assessment & Exploitation — MITE</div>
+        <div class="cert">Prompt Wars — MITE</div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Let's build something.</h2>
+      <div class="contact" style="margin-top:12px;align-items:flex-start">
+        <a class="tag" href="mailto:ishitaachaarya06.work@gmail.com">ishitaachaarya06.work@gmail.com</a>
+        <a class="tag" href="tel:+919353008524" style="margin-top:8px">+91 9353008524</a>
+        <div style="margin-top:12px" class="icons">
+          <a class="icon" href="https://www.linkedin.com/in/ishita-acharya-10a9a4329" target="_blank" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.48 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8h4V24h-4zM8.5 8h3.84v2.22h.05c.54-1.02 1.86-2.09 3.83-2.09 4.1 0 4.86 2.69 4.86 6.18V24h-4v-7.2c0-1.72-.03-3.93-2.4-3.93-2.4 0-2.77 1.88-2.77 3.8V24h-4z"/></svg>
+          </a>
+          <a class="icon" href="https://github.com/ishitaacharya2005" target="_blank" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.57.11.78-.25.78-.55 0-.27-.01-1-.02-1.96-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.02 1.74 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.52-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.48.11-3.09 0 0 .96-.31 3.15 1.18.91-.25 1.9-.38 2.88-.38.98 0 1.97.13 2.88.38 2.19-1.49 3.15-1.18 3.15-1.18.62 1.61.23 2.8.11 3.09.74.81 1.18 1.84 1.18 3.1 0 4.43-2.7 5.4-5.27 5.68.41.35.77 1.04.77 2.1 0 1.52-.01 2.74-.01 3.11 0 .3.2.66.79.55C20.71 21.39 24 17.08 24 12c0-6.27-5.23-11.5-12-11.5z"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>© Ishita P Acharya — Built with care • Graduating Sept 2026</footer>
+
+  <script>
+    // Background canvas: subtle floating particles/grid
+    (function(){
+      const canvas=document.getElementById('bgCanvas');
+      const ctx=canvas.getContext('2d');
+      let w=canvas.width=innerWidth, h=canvas.height=innerHeight;
+      const particles=[];
+      const COUNT=Math.max(18, Math.floor((w*h)/90000));
+      function rand(min,max){return Math.random()*(max-min)+min}
+      for(let i=0;i<COUNT;i++){
+        particles.push({x:rand(0,w),y:rand(0,h),r:rand(0.6,2),vx:rand(-0.15,0.15),vy:rand(-0.15,0.15)})
+      }
+      function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight}
+      addEventListener('resize',resize);
+      function draw(){ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(10,167,255,0.06)';
+        for(const p of particles){p.x+=p.vx;p.y+=p.vy; if(p.x<0)p.x=w; if(p.x>w)p.x=0; if(p.y<0)p.y=h; if(p.y>h)p.y=0; ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()}
+        // subtle lines
+        for(let i=0;i<particles.length;i++){
+          for(let j=i+1;j<particles.length;j++){
+            const a=particles[i], b=particles[j]; const dx=a.x-b.x, dy=a.y-b.y; const d=dx*dx+dy*dy;
+            if(d<90000){ ctx.strokeStyle='rgba(10,167,255,'+ (0.0015*(90000-d)) +')'; ctx.lineWidth=0.8; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke() }
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    // IntersectionObserver: reveal sections
+    const io=new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target) } }) },{threshold:0.12});
+    document.querySelectorAll('section').forEach(s=>io.observe(s));
+
+    // Custom cursor behavior
+    const cursor=document.getElementById('cursorEl');
+    document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px'});
+    document.querySelectorAll('a, button, .icon').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{cursor.style.transform='translate(-50%,-50%) scale(1.8)'; cursor.style.opacity=1});
+      el.addEventListener('mouseleave',()=>{cursor.style.transform='translate(-50%,-50%) scale(1)'; cursor.style.opacity=1});
+    });
+    document.addEventListener('keydown',e=>{ if(e.key==='Tab'){ document.body.style.cursor='auto'; cursor.style.display='none' } });
+
+  </script>
+</body>
+</html>
