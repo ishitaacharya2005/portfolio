@@ -9,17 +9,17 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --blush:      #FAF0F3;
+  --blush:      #FAF3E8;
   --petal:      #F5D6E0;
   --rose:       #E8A0B4;
   --deep-rose:  #C2607A;
   --sakura:     #F2B8C6;
-  --bark:       #3D2630;
-  --bark-mid:   #6B3F4E;
-  --bark-soft:  #9C6B78;
-  --cream:      #FDF7F9;
+  --bark:       #3B2B22;
+  --bark-mid:   #6F4A38;
+  --bark-soft:  #9C7B65;
+  --cream:      #FFFBF3;
   --white:      #FFFFFF;
-  --muted:      #B0899A;
+  --muted:      #B39680;
   --border:     rgba(194,96,122,0.15);
   --border-soft:rgba(232,160,180,0.2);
 
@@ -56,7 +56,7 @@ nav {
   align-items: center;
   justify-content: space-between;
   padding: 1.1rem 4rem;
-  background: rgba(250,240,243,0.85);
+  background: rgba(250,243,232,0.85);
   backdrop-filter: blur(18px);
   border-bottom: 1px solid var(--border);
 }
@@ -217,10 +217,10 @@ nav {
   background: var(--white);
   border: 1px solid var(--border-soft);
   border-radius: 32px 8px 32px 8px;
-  padding: 2.5rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.1rem;
   box-shadow: 0 8px 40px rgba(194,96,122,0.08);
   max-width: 360px;
   width: 100%;
@@ -240,18 +240,6 @@ nav {
 .stat-suffix { color: var(--deep-rose); font-weight: 600; font-size: 1.2rem; }
 .stat-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.1rem; }
 .hero-blob-divider { height: 1px; background: var(--petal); }
-.hero-blossom-row {
-  display: flex;
-  justify-content: space-between;
-}
-.hero-blossom-stat { text-align: center; }
-.blossom-num {
-  font-family: var(--font-serif);
-  font-size: 1.8rem;
-  color: var(--bark);
-  display: block;
-}
-.blossom-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
 .hero-tag-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 .hero-pill {
   font-size: 0.72rem;
@@ -664,12 +652,11 @@ footer a { color: var(--deep-rose); text-decoration: none; }
         <div class="stat-label">GPA - MITE, Karnataka</div>
       </div>
       <div class="hero-blob-divider"></div>
-      <div class="hero-blossom-row">
-        <div class="hero-blossom-stat">
-          <span class="blossom-num">6+</span>
-          <span class="blossom-label">Projects</span>
+      <div>
+        <div class="hero-blob-stat">
+          <span class="stat-num">6+</span>
         </div>
-
+        <div class="stat-label">Projects</div>
       </div>
       <div class="hero-blob-divider"></div>
       <div class="hero-tag-row">
@@ -961,7 +948,7 @@ window.addEventListener('resize', resize);
 
 const PETAL_COUNT = 28;
 const petals = [];
-const PETAL_COLORS = ['rgba(245,214,224,0.7)','rgba(242,184,198,0.6)','rgba(232,160,180,0.5)','rgba(250,240,243,0.6)'];
+const PETAL_COLORS = ['rgba(245,214,224,0.7)','rgba(242,184,198,0.6)','rgba(232,160,180,0.5)','rgba(250,243,232,0.6)'];
 
 function makePetal() {
   return {
